@@ -7,6 +7,10 @@
     "explore": "gridsome explore"
   },
   "dependencies": {
+    "@assemblyscript/loader": "^0.17.4",
     "gridsome": "^0.7.0"
+  },
+  "devDependencies": {
+    "assemblyscript": "^0.17.4"
   }
 }
