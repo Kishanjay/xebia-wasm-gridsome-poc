@@ -1,6 +1,7 @@
 {
   "name": "wasm-poc",
   "private": true,
+  "engines" : { "node" : "^12.16" },
   "scripts": {
     "build": "gridsome build",
     "develop": "gridsome develop",
