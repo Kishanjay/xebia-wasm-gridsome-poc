@@ -60,15 +60,15 @@
               </div>
             </div>
             <div class="hidden md:block md:ml-10 md:pr-4 md:space-x-8">
-              <a href="#" class="font-medium text-gray-500 hover:text-gray-900"
+              <a href="https://www.linkedin.com/in/kishan-nirghin-83b272149/" class="font-medium text-gray-500 hover:text-gray-900"
                 >Kishan</a
               >
 
-              <a href="#" class="font-medium text-gray-500 hover:text-gray-900"
+              <a href="https://www.linkedin.com/in/patrick-akil-721b07105/" class="font-medium text-gray-500 hover:text-gray-900"
                 >Patrick</a
               >
 
-              <a href="#" class="font-medium text-gray-500 hover:text-gray-900"
+              <a href="https://www.linkedin.com/in/jeroenooms/" class="font-medium text-gray-500 hover:text-gray-900"
                 >Jeroen</a
               >
             </div>
@@ -194,6 +194,7 @@
                 <a
                   href="#"
                   class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
+                  @click="fib"
                 >
                   Generate Fibonacci
                 </a>
@@ -201,18 +202,19 @@
             </div>
 
             <div
+              v-if="running"
               class="mt-10 loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-16 w-16"
             ></div>
 
             <div class="mt-10 flex flex-row space-x-4">
               <div class="rounded-md w-1/3 shadow p-5 ">
                 <h2 class="text-2xl text-indigo-600">Javascript</h2>
-                <h3 class="mt-2">25.55 seconds</h3>
+                <h3 class="mt-2">{{ performanceFib1 || '-'}} milliseconds</h3>
               </div>
 
               <div class="rounded-md w-1/3 shadow p-5 ">
                 <h2 class="text-2xl text-indigo-600">WebAssembly</h2>
-                <h3 class="mt-2">3.44 seconds</h3>
+                <h3 class="mt-2">{{ performanceFib2 || '-'}} milliseconds</h3>
               </div>
             </div>
           </div>
@@ -232,27 +234,59 @@
 <script>
 export default {
   name: "Hero",
+  data() {
+    return {
+      n: 32,
+      fib1: fibonacci,
+      fib2: undefined, // lazy-loaded by created lifecycle
 
-  methods: {
-    async addExample() {
-      const imports = {
-        env: {
-          abort(msg, file, line, column) {
-            console.error("Abort called at index.ts:");
-            console.error({ msg, file, line, column });
-          },
-        },
-      };
 
-      WebAssembly.instantiateStreaming(
-        fetch("/build/optimized.wasm"),
-        imports
-      ).then((results) => {
-        console.log({ x: results.instance.exports.add(1, 55) });
-      });
-    },
+      running: false,
+      performanceFib1: null,
+      performanceFib2: null,
+    }
   },
+  created() {
+    const imports = {
+      env: {
+        abort (msg, file, line, column) {
+          console.error({ msg, file, line, column })
+        }
+      }
+    }
+
+    WebAssembly.instantiateStreaming(fetch('/build/optimized.wasm'), imports)
+    .then(results => {
+      this.fib2 = results.instance.exports.fibonacci
+    });
+  },
+  methods: {
+    fib() {
+      this.running = true;
+
+      const start = performance.now();
+      this.fib1(this.n);
+      this.performanceFib1 = (performance.now() - start).toFixed(4);
+
+      const start2 = performance.now();
+      this.fib2(this.n);
+      this.performanceFib2 = (performance.now() - start2).toFixed(4);
+
+      this.running = false;
+    }
+  }
 };
+
+function fibonacci(n) {
+  if (n === 0){
+    return 0;
+  }
+  if (n === 1){
+    return 1;
+  }
+
+  return fibonacci(n-1) + fibonacci(n-2);
+}
 </script>
 
 <style>
