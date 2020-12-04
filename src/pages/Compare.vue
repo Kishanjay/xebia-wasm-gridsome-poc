@@ -3,11 +3,15 @@
       <h1>Sample comparison page</h1>
 
       <div>
-      <input type="range" v-model="n" max="10" /> {{ n }}
+      <input type="range" v-model="n" max="40" /> {{ n }}
       </div>
       <button @click="fib">
           Run 1
       </button>
+
+
+      {{ performanceFib1 }}
+      {{ performanceFib2 }}
   </div>
 </template>
 
@@ -18,6 +22,11 @@ export default {
       n: 10,
       fib1: fibonacci,
       fib2: undefined, // lazy-loaded by created lifecycle
+
+
+      running: false,
+      performanceFib1: null,
+      performanceFib2: null,
     }
   },
   created() {
@@ -31,9 +40,23 @@ export default {
 
     WebAssembly.instantiateStreaming(fetch('/build/optimized.wasm'), imports)
     .then(results => {
-      console.log({x: results.instance.exports.fibonacci(this.n)});
-      console.log({y: this.jsfib(this.n)});
+      this.fib2 = results.instance.exports.fibonacci
     });
+  },
+  methods: {
+    fib() {
+      this.running = true;
+
+      const start = performance.now();
+      this.fib1(this.n);
+      this.performanceFib1 = performance.now() - start;
+
+      const start2 = performance.now();
+      this.fib2(this.n);
+      this.performanceFib2 = performance.now() - start2;
+
+      this.running = false;
+    }
   }
 }
 
