@@ -222,12 +222,12 @@
             ></div>
 
             <div class="mt-10 flex flex-row space-x-4">
-              <div class="rounded-md w-2/5 shadow p-5 ">
+              <div class="rounded-md w-1/3 shadow p-5">
                 <h2 class="text-2xl text-indigo-600">Javascript</h2>
                 <h3 class="mt-2">{{ performanceFib1 || "-" }} milliseconds</h3>
               </div>
 
-              <div class="rounded-md w-2/5 shadow p-5 ">
+              <div class="rounded-md w-1/3 shadow p-5">
                 <h2 class="text-2xl text-indigo-600">WebAssembly</h2>
                 <h3 class="mt-2">{{ performanceFib2 || "-" }} milliseconds</h3>
               </div>
@@ -260,7 +260,7 @@ export default {
       performanceFib2: null,
     };
   },
-  created() {
+  mounted() {
     const imports = {
       env: {
         abort(msg, file, line, column) {
