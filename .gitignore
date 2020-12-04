@@ -15,3 +15,6 @@ src/.temp/
 _random
 
 dist
+
+# Local Netlify folder
+.netlify
