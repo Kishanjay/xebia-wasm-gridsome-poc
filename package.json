@@ -1,7 +1,9 @@
 {
   "name": "wasm-poc",
   "private": true,
-  "engines" : { "node" : "^14.4" },
+  "engines": {
+    "node": "^14.4"
+  },
   "scripts": {
     "build": "gridsome build",
     "develop": "gridsome develop",
@@ -9,13 +11,16 @@
     "asbuild:untouched": "asc assembly/index.ts --target debug",
     "asbuild:optimized": "asc assembly/index.ts --target release",
     "asbuild": "npm run asbuild:untouched && npm run asbuild:optimized",
-    "test": "node tests"
+    "test": "jest --config jest.config.json"
   },
   "dependencies": {
     "@assemblyscript/loader": "^0.17.4",
-    "gridsome": "^0.7.0"
+    "gridsome": "^0.7.0",
+    "typescript": "^4.1.2"
   },
   "devDependencies": {
-    "assemblyscript": "^0.17.4"
+    "assemblyscript": "^0.17.4",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.4.4"
   }
 }
