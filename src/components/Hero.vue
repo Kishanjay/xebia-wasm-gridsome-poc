@@ -61,25 +61,15 @@
             </div>
             <div class="hidden md:block md:ml-10 md:pr-4 md:space-x-8">
               <a href="#" class="font-medium text-gray-500 hover:text-gray-900"
-                >Product</a
+                >Kishan</a
               >
 
               <a href="#" class="font-medium text-gray-500 hover:text-gray-900"
-                >Features</a
+                >Patrick</a
               >
 
               <a href="#" class="font-medium text-gray-500 hover:text-gray-900"
-                >Marketplace</a
-              >
-
-              <a href="#" class="font-medium text-gray-500 hover:text-gray-900"
-                >Company</a
-              >
-
-              <a
-                href="#"
-                class="font-medium text-indigo-600 hover:text-indigo-500"
-                >Log in</a
+                >Jeroen</a
               >
             </div>
           </nav>
@@ -194,28 +184,35 @@
             <p
               class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0"
             >
-              Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui
-              lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat
-              fugiat aliqua.
+              Webassembly versus Javascript
             </p>
+
             <div
-              class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start"
+              class="mt-10 sm:mt-10 sm:flex sm:justify-center lg:justify-start"
             >
               <div class="rounded-md shadow">
                 <a
                   href="#"
                   class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
                 >
-                  Get started
+                  Generate Fibonacci
                 </a>
               </div>
-              <div class="mt-3 sm:mt-0 sm:ml-3">
-                <button
-                  v-on:click="addExample()"
-                  class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 md:py-4 md:text-lg md:px-10"
-                >
-                  Live demo
-                </button>
+            </div>
+
+            <div
+              class="mt-10 loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-16 w-16"
+            ></div>
+
+            <div class="mt-10 flex flex-row space-x-4">
+              <div class="rounded-md w-1/3 shadow p-5 ">
+                <h2 class="text-2xl text-indigo-600">Javascript</h2>
+                <h3 class="mt-2">25.55 seconds</h3>
+              </div>
+
+              <div class="rounded-md w-1/3 shadow p-5 ">
+                <h2 class="text-2xl text-indigo-600">WebAssembly</h2>
+                <h3 class="mt-2">3.44 seconds</h3>
               </div>
             </div>
           </div>
@@ -233,30 +230,53 @@
 </template>
 
 <script>
-
-
 export default {
   name: "Hero",
 
   methods: {
-    async addExample () {
+    async addExample() {
       const imports = {
         env: {
-          abort (msg, file, line, column) {
-            console.error('Abort called at index.ts:')
-            console.error({ msg, file, line, column })
-          }
-        }
-      }
+          abort(msg, file, line, column) {
+            console.error("Abort called at index.ts:");
+            console.error({ msg, file, line, column });
+          },
+        },
+      };
 
-      WebAssembly.instantiateStreaming(fetch('/build/optimized.wasm'), imports)
-      .then(results => {
-        console.log({x: results.instance.exports.add(1,55)});
+      WebAssembly.instantiateStreaming(
+        fetch("/build/optimized.wasm"),
+        imports
+      ).then((results) => {
+        console.log({ x: results.instance.exports.add(1, 55) });
       });
-    }
-  }
+    },
+  },
 };
-
 </script>
 
-<style></style>
+<style>
+.loader {
+  border-top-color: #4f46e5;
+  -webkit-animation: spinner 1s linear infinite;
+  animation: spinner 1s linear infinite;
+}
+
+@-webkit-keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>
