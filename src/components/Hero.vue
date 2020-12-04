@@ -60,15 +60,21 @@
               </div>
             </div>
             <div class="hidden md:block md:ml-10 md:pr-4 md:space-x-8">
-              <a href="https://www.linkedin.com/in/kishan-nirghin-83b272149/" class="font-medium text-gray-500 hover:text-gray-900"
+              <a
+                href="https://www.linkedin.com/in/kishan-nirghin-83b272149/"
+                class="font-medium text-gray-500 hover:text-gray-900"
                 >Kishan</a
               >
 
-              <a href="https://www.linkedin.com/in/patrick-akil-721b07105/" class="font-medium text-gray-500 hover:text-gray-900"
+              <a
+                href="https://www.linkedin.com/in/patrick-akil-721b07105/"
+                class="font-medium text-gray-500 hover:text-gray-900"
                 >Patrick</a
               >
 
-              <a href="https://www.linkedin.com/in/jeroenooms/" class="font-medium text-gray-500 hover:text-gray-900"
+              <a
+                href="https://www.linkedin.com/in/jeroenooms/"
+                class="font-medium text-gray-500 hover:text-gray-900"
                 >Jeroen</a
               >
             </div>
@@ -190,6 +196,15 @@
             <div
               class="mt-10 sm:mt-10 sm:flex sm:justify-center lg:justify-start"
             >
+              <div class="slidecontainer">
+                <input type="range" class="slider" v-model="n" max="40" />
+                <span class="slider-number">{{ n }}</span>
+              </div>
+            </div>
+
+            <div
+              class="mt-10 sm:mt-10 sm:flex sm:justify-center lg:justify-start"
+            >
               <div class="rounded-md shadow">
                 <a
                   href="#"
@@ -207,14 +222,14 @@
             ></div>
 
             <div class="mt-10 flex flex-row space-x-4">
-              <div class="rounded-md w-1/3 shadow p-5 ">
+              <div class="rounded-md w-2/5 shadow p-5 ">
                 <h2 class="text-2xl text-indigo-600">Javascript</h2>
-                <h3 class="mt-2">{{ performanceFib1 || '-'}} milliseconds</h3>
+                <h3 class="mt-2">{{ performanceFib1 || "-" }} milliseconds</h3>
               </div>
 
-              <div class="rounded-md w-1/3 shadow p-5 ">
+              <div class="rounded-md w-2/5 shadow p-5 ">
                 <h2 class="text-2xl text-indigo-600">WebAssembly</h2>
-                <h3 class="mt-2">{{ performanceFib2 || '-'}} milliseconds</h3>
+                <h3 class="mt-2">{{ performanceFib2 || "-" }} milliseconds</h3>
               </div>
             </div>
           </div>
@@ -240,24 +255,25 @@ export default {
       fib1: fibonacci,
       fib2: undefined, // lazy-loaded by created lifecycle
 
-
       running: false,
       performanceFib1: null,
       performanceFib2: null,
-    }
+    };
   },
   created() {
     const imports = {
       env: {
-        abort (msg, file, line, column) {
-          console.error({ msg, file, line, column })
-        }
-      }
-    }
+        abort(msg, file, line, column) {
+          console.error({ msg, file, line, column });
+        },
+      },
+    };
 
-    WebAssembly.instantiateStreaming(fetch('/build/optimized.wasm'), imports)
-    .then(results => {
-      this.fib2 = results.instance.exports.fibonacci
+    WebAssembly.instantiateStreaming(
+      fetch("/build/optimized.wasm"),
+      imports
+    ).then((results) => {
+      this.fib2 = results.instance.exports.fibonacci;
     });
   },
   methods: {
@@ -273,19 +289,19 @@ export default {
       this.performanceFib2 = (performance.now() - start2).toFixed(4);
 
       this.running = false;
-    }
-  }
+    },
+  },
 };
 
 function fibonacci(n) {
-  if (n === 0){
+  if (n === 0) {
     return 0;
   }
-  if (n === 1){
+  if (n === 1) {
     return 1;
   }
 
-  return fibonacci(n-1) + fibonacci(n-2);
+  return fibonacci(n - 1) + fibonacci(n - 2);
 }
 </script>
 
@@ -312,5 +328,41 @@ function fibonacci(n) {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.slider {
+  display: inline-block;
+  margin-right: 20px;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 200px;
+  height: 10px;
+  border-radius: 5px;
+  background: #e5e7eb;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #4f46e5;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #4f46e5;
+  cursor: pointer;
 }
 </style>
