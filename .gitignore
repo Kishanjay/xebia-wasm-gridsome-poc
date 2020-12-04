@@ -9,3 +9,5 @@ node_modules
 src/.temp/
 
 /build
+
+_random

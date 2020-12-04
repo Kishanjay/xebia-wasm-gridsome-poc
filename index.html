@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML WASM POC</title>
+</head>
+<body>
+    <script>
+        const imports = {
+            env: {
+                abort (msg, file, line, column) {
+                    console.error('Abort called at index.ts:')
+                    console.error({ msg, file, line, column })
+                }
+            }
+        }
+        
+        WebAssembly.instantiateStreaming(fetch('./build/optimized.wasm'), imports)
+        .then(results => {
+            console.log({x: results.instance.exports.add(1,55)});
+        });
+    </script>
+</body>
+</html>
