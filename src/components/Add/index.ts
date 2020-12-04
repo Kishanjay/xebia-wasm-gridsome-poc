@@ -24,6 +24,6 @@ function getWasmAPI () {
 }
 
 /** Exporting WasmAPI */
-export const add = {
+export const wasmADD = {
     ...getWasmAPI()
 }

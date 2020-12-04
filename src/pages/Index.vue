@@ -18,31 +18,6 @@
   </Layout>
 </template>
 
-<script>
-
-// import fetch from 'cross-fetch';
-
-export default {
-  metaInfo: {
-    title: 'Hello, world!'
-  }
-}
-
-const imports = {
-    env: {
-        abort (msg, file, line, column) {
-            console.error('Abort called at index.ts:')
-            console.error({ msg, file, line, column })
-        }
-    }
-}
-
-WebAssembly.instantiateStreaming(fetch('/build/optimized.wasm'), imports)
-.then(results => {
-    console.log({x: results.instance.exports.add(1,55)});
-});
-</script>
-
 <style>
 .home-links a {
   margin-right: 1rem;
