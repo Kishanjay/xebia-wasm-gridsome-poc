@@ -31,8 +31,21 @@ export default {
       WebAssembly.instantiateStreaming(fetch('/build/optimized.wasm'), imports)
       .then(results => {
         console.log({x: results.instance.exports.fibonacci(this.n)});
+        console.log({y: this.jsfib(this.n)});
       });
+    },
+
+    jsfib (n) {
+      if (n === 0){
+        return 0;
+      }
+      if (n === 1){
+        return 1;
+      }
+
+      return this.jsfib(n-1) + this.jsfib(n-2);
     }
+
   }
 }
 </script>
