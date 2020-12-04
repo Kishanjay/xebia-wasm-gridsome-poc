@@ -197,7 +197,13 @@
               class="mt-10 sm:mt-10 sm:flex sm:justify-center lg:justify-start"
             >
               <div class="slidecontainer">
-                <input type="range" class="slider" v-model="n" max="40" />
+                <input
+                  type="range"
+                  class="slider"
+                  v-model="n"
+                  min="2"
+                  max="40"
+                />
                 <span class="slider-number">{{ n }}</span>
               </div>
             </div>
