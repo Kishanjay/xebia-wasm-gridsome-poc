@@ -7,6 +7,12 @@
     "explore": "gridsome explore"
   },
   "dependencies": {
-    "gridsome": "^0.7.0"
+    "autoprefixer": "^9",
+    "gridsome": "^0.7.0",
+    "postcss": "^7",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
+  },
+  "devDependencies": {
+    "gridsome-plugin-tailwindcss": "^4.1.1"
   }
 }
