@@ -10,6 +10,8 @@ src/.temp/
 
 /build
 
+/static/build/
+
 _random
 
 dist
